@@ -4,6 +4,7 @@ A Python program that estimates the birthday paradox with a Monte Carlo simulati
 
 ![Python](https://img.shields.io/badge/python-3.x-3776AB?logo=python&logoColor=white)
 ![Dependencies](https://img.shields.io/badge/dependencies-none-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 ## Overview
 
@@ -89,6 +90,10 @@ so the chance of at least one match is $1 - P(\text{no match})$.
 
 - A year has 365 days and leap years are ignored.
 - Every birthday is equally likely. Real birth data isn't spread evenly, so actual odds are slightly higher.
+
+## License
+
+Released under the MIT License. See [LICENSE](LICENSE) for details.
 
 ## Author
 
