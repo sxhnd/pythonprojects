@@ -99,4 +99,4 @@ Released under the MIT License. See [LICENSE](LICENSE) for details.
 
 Andre Idrissi, Math and CS student at the University of Georgia
 
-[GitHub](https://github.com/sxhnd) · [LinkedIn](https://www.linkedin.com/in/andre-idrissi-6693b7353/)
+[GitHub](https://github.com/sxhnd) · [LinkedIn](https://www.linkedin.com/in/andreidrissi)
