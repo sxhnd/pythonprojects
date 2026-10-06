@@ -29,6 +29,39 @@ class Value:
         out._backward = _backward
         return out
 
+    def __pow__(self, exponent):
+        assert isinstance(exponent, (int, float)), "only number exponents are supported"
+        out = Value(self.data ** exponent, (self,))
+
+        def _backward():
+            # d(x**n)/dx = n * x**(n-1)
+            self.grad += exponent * self.data ** (exponent - 1) * out.grad
+        out._backward = _backward
+        return out
+
+    def __neg__(self):
+        return self * -1
+
+    def __sub__(self, other):
+        return self + (-other)
+
+    def __truediv__(self, other):
+        return self * other ** -1
+
+    # Python calls these when the Value is on the right, as in 2 * x or 0 + x
+    # (sum() starts from 0).
+    def __radd__(self, other):
+        return self + other
+
+    def __rmul__(self, other):
+        return self * other
+
+    def __rsub__(self, other):
+        return other + (-self)
+
+    def __rtruediv__(self, other):
+        return other * self ** -1
+
     def backward(self):
         # Order the graph so every node comes after all the nodes it was built from.
         order = []
