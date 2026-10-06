@@ -67,3 +67,28 @@ def test_gradient_flows_through_a_deeper_chain():
     assert a.grad == 12.0
     assert b.grad == 8.0
     assert c.grad == 6.0
+
+
+def test_node_used_twice_in_one_operation():
+    # y = x*x, so dy/dx = 2x
+    x = Value(3.0)
+    y = x * x
+    y.backward()
+    assert x.grad == 6.0
+
+
+def test_node_added_to_itself():
+    a = Value(2.0)
+    b = a + a
+    b.backward()
+    assert a.grad == 2.0
+
+
+def test_node_feeding_two_branches():
+    # e = (a*3) * (a+1), so de/da = 3*(a+1) + (a*3)*1 = 9 + 6 at a = 2
+    a = Value(2.0)
+    c = a * 3
+    d = a + 1
+    e = c * d
+    e.backward()
+    assert a.grad == 15.0
