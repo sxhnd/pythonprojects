@@ -1,0 +1,13 @@
+[project]
+name = "autograd"
+version = "0.1.0"
+description = "A scalar autograd engine with gradient checking and optimizers"
+requires-python = ">=3.10"
+dependencies = ["matplotlib"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
