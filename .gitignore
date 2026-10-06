@@ -1,5 +1,13 @@
-*
-!.gitignore
-!Birthday Problem.py
-!README.md
-!LICENSE
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# Editors and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
