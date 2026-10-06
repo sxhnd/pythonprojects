@@ -1,5 +1,5 @@
 from engine import Value
-from optim import SGD
+from optim import SGD, Momentum
 
 
 def minimize_square(optimizer_class, steps, **kwargs):
@@ -33,3 +33,24 @@ def test_sgd_zero_grad():
     (x ** 2).backward()
     optimizer.zero_grad()
     assert x.grad == 0.0
+
+
+def test_momentum_first_step_matches_sgd():
+    # velocity starts at 0, so the first step is the same as plain SGD
+    x = Value(5.0)
+    optimizer = Momentum([x], lr=0.1, beta=0.9)
+    (x ** 2).backward()
+    optimizer.step()
+    assert abs(x.data - 4.0) < 1e-12
+
+
+def test_momentum_minimizes_square():
+    assert abs(minimize_square(Momentum, steps=300, lr=0.1, beta=0.9)) < 1e-4
+
+
+def test_momentum_beats_sgd_with_a_small_learning_rate():
+    # With a small lr, SGD crawls. Momentum builds up speed in the
+    # direction the gradient keeps pointing.
+    sgd_x = minimize_square(SGD, steps=100, lr=0.01)
+    momentum_x = minimize_square(Momentum, steps=100, lr=0.01, beta=0.9)
+    assert abs(momentum_x) < abs(sgd_x) / 10
