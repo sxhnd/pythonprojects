@@ -1,3 +1,6 @@
+import math
+
+
 class Value:
     """A single number that remembers which Values it was computed from."""
 
@@ -61,6 +64,44 @@ class Value:
 
     def __rtruediv__(self, other):
         return other * self ** -1
+
+    def tanh(self):
+        t = math.tanh(self.data)
+        out = Value(t, (self,))
+
+        def _backward():
+            # d(tanh x)/dx = 1 - tanh(x)**2
+            self.grad += (1 - t ** 2) * out.grad
+        out._backward = _backward
+        return out
+
+    def relu(self):
+        out = Value(max(0.0, self.data), (self,))
+
+        def _backward():
+            # slope 1 above zero, 0 below; at exactly 0 we pick 0
+            self.grad += (self.data > 0) * out.grad
+        out._backward = _backward
+        return out
+
+    def exp(self):
+        e = math.exp(self.data)
+        out = Value(e, (self,))
+
+        def _backward():
+            # e**x is its own derivative
+            self.grad += e * out.grad
+        out._backward = _backward
+        return out
+
+    def log(self):
+        out = Value(math.log(self.data), (self,))
+
+        def _backward():
+            # d(ln x)/dx = 1/x
+            self.grad += (1 / self.data) * out.grad
+        out._backward = _backward
+        return out
 
     def backward(self):
         # Order the graph so every node comes after all the nodes it was built from.
