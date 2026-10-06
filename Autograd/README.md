@@ -2,8 +2,9 @@
 
 A scalar autograd engine built from scratch. Currently supports addition,
 subtraction, multiplication, division, powers with a number exponent, tanh, ReLU,
-exp and log, along with backpropagation and numerical gradient checking. Neural
-network components and SGD, Momentum, and Adam optimizers are planned.
+exp and log, along with backpropagation and numerical gradient checking. It also
+has a small neural network library (neurons, layers, a multilayer perceptron and
+mean squared error loss). SGD, Momentum, and Adam optimizers are planned.
 
 ## Running the tests
 
